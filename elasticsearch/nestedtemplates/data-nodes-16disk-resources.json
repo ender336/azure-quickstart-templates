@@ -71,7 +71,7 @@
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
     "storageAccountName": "[parameters('storageSettings').prefix]",
     "storageAccountNameAFS": "[parameters('storageSettings').afs]",
-    "vmName": "[concat(parameters('namespace'), '-vm')]"
+    "vmName": "[concat(parameters('namespace'), '-vm4')]"
   },
   "resources": [
     {
@@ -111,14 +111,14 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat(variables('vmName'), copyindex())]",
+      "name": "[(variables('vmName'))]",
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "[concat(parameters('namespace'), 'virtualMachineLoop')]",
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', copyindex()))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '4'))]",
         "[resourceId('Microsoft.Compute/availabilitySets', 'es-data-set')]"
       ],
       "properties": {
@@ -129,7 +129,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[concat('data-vm', copyIndex())]",
+          "computerName": "[concat('data-vm', '4')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('authSet').password]",
           "linuxConfiguration": "[parameters('osSettings').linuxConfiguration]"
@@ -139,7 +139,7 @@
           "osDisk": {
             "name": "osdisk",
             "vhd": {
-              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, 'vhds/', variables('vmName'), copyindex(), '-osdisk.vhd')]"
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, 'vhds/', variables('vmName'), '-osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
@@ -322,7 +322,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', concat(variables('vmName'), copyindex()))]"
+            "[resourceId('Microsoft.Compute/virtualMachines', concat(variables('vmName')))]"
           ],
           "properties": {
             "publisher": "[parameters('osSettings').extensionSettings.data.publisher]",
