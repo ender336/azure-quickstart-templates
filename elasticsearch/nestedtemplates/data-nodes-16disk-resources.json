@@ -111,7 +111,7 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[(variables('vmName'))]",
+      "name": "[(variables('vmName')]",
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "[concat(parameters('namespace'), 'virtualMachineLoop')]",
@@ -322,7 +322,7 @@
           "apiVersion": "2015-06-15",
           "location": "[resourceGroup().location]",
           "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines', concat(variables('vmName')))]"
+            "[resourceId('Microsoft.Compute/virtualMachines', variables('vmName'))]"
           ],
           "properties": {
             "publisher": "[parameters('osSettings').extensionSettings.data.publisher]",
