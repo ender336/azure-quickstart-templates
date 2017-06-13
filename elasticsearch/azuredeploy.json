@@ -4,6 +4,7 @@
   "parameters": {
     "adminUsername": {
       "type": "string",
+      "defaultValue": "clarity",
       "metadata": {
         "description": "Admin username used when provisioning virtual machines"
       }
@@ -112,7 +113,7 @@
     },
     "vmDataNodeCount": {
       "type": "int",
-      "defaultValue": 3,
+      "defaultValue": 1,
       "metadata": {
         "description": "Number of Elasticsearch data nodes"
       }
