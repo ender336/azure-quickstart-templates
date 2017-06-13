@@ -26,9 +26,7 @@
       "type": "string",
       "defaultValue": "ubuntu",
       "allowedValues": [
-        "ubuntu",
-        "centos",
-        "windows"
+        "ubuntu"
       ],
       "metadata": {
         "description": "The operating system to deploy Elasticsearch cluster on"
@@ -65,9 +63,8 @@
     },
     "jumpbox": {
       "type": "string",
-      "defaultValue": "Yes",
+      "defaultValue": "No",
       "allowedValues": [
-        "Yes",
         "No"
       ],
       "metadata": {
@@ -76,18 +73,9 @@
     },
     "vmClientNodeCount": {
       "type": "int",
-      "defaultValue": 1,
+      "defaultValue": 0,
       "allowedValues": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9
+        0
       ],
       "metadata": {
         "description": "Number of Elasticsearch client nodes to provision (Setting this to zero puts the data nodes on the load balancer)"
@@ -95,21 +83,9 @@
     },
     "vmSizeClientNodes": {
       "type": "string",
-      "defaultValue": "Standard_D2_v2",
+      "defaultValue": "Standard_DS4",
       "allowedValues": [
-        "Standard_D2_v2",
-        "Standard_D3_v2",
-        "Standard_D4_v2",
-        "Standard_A2",
-        "Standard_A3",
-        "Standard_A4",
-        "Standard_A5",
-        "Standard_A6",
-        "Standard_A7",
-        "Standard_DS2",
-        "Standard_DS3",
-        "Standard_DS4",
-        "Standard_DS13"
+        "Standard_DS4"
       ],
       "metadata": {
         "description": "Size of the Elasticsearch cluster client nodes"
@@ -452,14 +428,6 @@
       "[concat(variables('sharedScriptsLocation'), 'vm-disk-utils-0.1.sh')]",
       "[concat(variables('sharedScriptsLocation'), 'afs-utils-0.1.sh')]"
     ],
-    "centosScripts": [
-      "[concat(variables('scriptsLocation'), 'elasticsearch-centos-install.sh', parameters('_artifactsLocationSasToken'))]",
-      "[concat(variables('scriptsLocation'), 'kibana-centos-install.sh', parameters('_artifactsLocationSasToken'))]",
-      "[concat(variables('sharedScriptsLocation'), 'vm-disk-utils-0.1.sh')]"
-    ],
-    "windowsScripts": [
-      "[concat(variables('scriptsLocation'), 'elasticsearch-windows-install.ps1', parameters('_artifactsLocationSasToken'))]"
-    ],
     "authSet": {
       "password": "[parameters('adminPassword')]",
       "sshKey": "[parameters('sshPublicKey')]",
@@ -499,26 +467,6 @@
             "commandToExecute": "[concat('bash elasticsearch-ubuntu-install.sh -wn ', variables('esSettings').marvelClusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').marvelHosts, ' -k ')]"
           }
         },
-        "master": {
-          "publisher": "Microsoft.Azure.Extensions",
-          "type": "CustomScript",
-          "autoUpgradeMinorVersion": true,
-          "typeHandlerVersion": "2.0",
-          "settings": {
-            "fileUris": "[variables('ubuntuScripts')]",
-            "commandToExecute": "[concat('bash elasticsearch-ubuntu-install.sh -xn ', variables('esSettings').clusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').discoveryHosts, variables('marvelParamValue'), variables('jmeterParamValue'), variables('cloudAzureParamValue'), variables('marvelExportParamValue'), variables('afsParamValue'))]"
-          }
-        },
-        "client": {
-          "publisher": "Microsoft.Azure.Extensions",
-          "type": "CustomScript",
-          "typeHandlerVersion": "2.0",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('ubuntuScripts')]",
-            "commandToExecute": "[concat('bash elasticsearch-ubuntu-install.sh -yn ', variables('esSettings').clusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').discoveryHosts, variables('marvelParamValue'), variables('jmeterParamValue'), variables('cloudAzureParamValue'), variables('marvelExportParamValue'), variables('afsParamValue'))]"
-          }
-        },
         "data": {
           "publisher": "Microsoft.Azure.Extensions",
           "type": "CustomScript",
@@ -526,130 +474,6 @@
           "settings": {
             "fileUris": "[variables('ubuntuScripts')]",
             "commandToExecute": "[concat('bash elasticsearch-ubuntu-install.sh -zn ', variables('esSettings').clusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').discoveryHosts, variables('marvelParamValue'), variables('jmeterParamValue'), variables('cloudAzureParamValue'), variables('marvelExportParamValue'), variables('afsParamValue'))]"
-          }
-        },
-        "kibana": {
-          "publisher": "Microsoft.Azure.Extensions",
-          "type": "CustomScript",
-	  "autoUpgradeMinorVersion": true,
-          "typeHandlerVersion": "2.0",
-          "settings": {
-            "fileUris": "[variables('ubuntuScripts')]",
-            "commandToExecute": "[concat('bash kibana-install.sh -v ', variables('esSettings').version, variables('marvelParamValue'), variables('senseParamValue'), ' -t ', variables('kibanaIP'))]"
-          }
-        }
-      }
-    },
-    "centosSettings": {
-      "imageReference":{
-        "publisher": "OpenLogic",
-        "offer": "CentOS",
-        "sku": "7.2",
-        "version": "latest"
-      },
-      "linuxConfiguration": "[variables('configurationObject')[parameters('authenticationType')]]",
-      "managementPort":"22",
-      "extensionSettings":{
-        "marvel": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "autoUpgradeMinorVersion": true,
-            "typeHandlerVersion": "2.0",
-            "settings": {
-              "fileUris": "[variables('centosScripts')]",
-              "commandToExecute": "[concat('bash elasticsearch-centos-install.sh -wn ', variables('esSettings').marvelClusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').marvelHosts, ' -k ')]"
-            }
-          },
-        "master": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "typeHandlerVersion": "2.0",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": "[variables('centosScripts')]",
-              "commandToExecute": "[concat('bash elasticsearch-centos-install.sh -xn ', variables('esSettings').clusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').discoveryHosts, variables('marvelParamValue'), variables('jmeterParamValue'), variables('cloudAzureParamValue'), variables('marvelExportParamValue'), variables('afsParamValue'))]"
-            }
-          },
-        "client": {
-            "publisher": "Microsoft.Azure.Extensions",
-            "type": "CustomScript",
-            "typeHandlerVersion": "2.0",
-            "autoUpgradeMinorVersion": true,
-            "settings": {
-              "fileUris": "[variables('centosScripts')]",
-              "commandToExecute": "[concat('bash elasticsearch-centos-install.sh -yn ', variables('esSettings').clusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').discoveryHosts, variables('marvelParamValue'), variables('jmeterParamValue'),  variables('cloudAzureParamValue'),variables('marvelExportParamValue'), variables('afsParamValue'))]"
-            }
-          },
-        "data": {
-          "publisher": "Microsoft.Azure.Extensions",
-          "type": "CustomScript",
-          "typeHandlerVersion": "2.0",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('centosScripts')]",
-            "commandToExecute": "[concat('bash elasticsearch-centos-install.sh -zn ', variables('esSettings').clusterName, ' -v ', variables('esSettings').version, ' -d ', variables('esSettings').discoveryHosts, variables('marvelParamValue'), variables('jmeterParamValue'),  variables('cloudAzureParamValue'),variables('marvelExportParamValue'), variables('afsParamValue'))]"
-          }
-        },
-        "kibana": {
-          "publisher": "Microsoft.Azure.Extensions",
-          "type": "CustomScript",
-          "typeHandlerVersion": "2.0",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('centosScripts')]",
-            "commandToExecute": "[concat('bash kibana-centos-install.sh -v ', variables('esSettings').version, variables('marvelParamValue'), variables('senseParamValue'), ' -t ', variables('kibanaIP'))]"
-          }
-        }
-      }
-    },
-    "windowsSettings": {
-      "imageReference": {
-        "publisher": "MicrosoftWindowsServer",
-        "offer": "WindowsServer",
-        "sku": "2012-R2-Datacenter",
-        "version": "latest"
-      },
-      "linuxConfiguration": "",
-      "managementPort": "3389",
-      "extensionSettings": {
-        "marvel": {
-          "publisher": "Microsoft.Compute",
-          "type": "CustomScriptExtension",
-          "typeHandlerVersion": "1.4",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('windowsScripts')]",
-            "commandToExecute": "[concat('powershell.exe -File elasticsearch-windows-install.ps1 -elasticSearchVersion ', variables('esSettings').version, ' -elasticClusterName ', variables('esSettings').marvelClusterName, ' -discoveryEndpoints ', variables('esSettings').marvelHosts, ' -marvelOnlyNode -storageKey ')]"
-          }
-        },
-        "master": {
-          "publisher": "Microsoft.Compute",
-          "type": "CustomScriptExtension",
-          "typeHandlerVersion": "1.4",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('windowsScripts')]",
-            "commandToExecute": "[concat('powershell.exe -File elasticsearch-windows-install.ps1 -elasticSearchVersion ', variables('esSettings').version, ' -elasticClusterName ', variables('esSettings').clusterName, ' -discoveryEndpoints ', variables('esSettings').discoveryHosts, variables('cloudAzureParamValue'), variables('marvelParamValue'), variables('marvelExportParamValue'), ' -masterOnlyNode -storageKey ')]"
-          }
-        },
-        "client": {
-          "publisher": "Microsoft.Compute",
-          "type": "CustomScriptExtension",
-          "typeHandlerVersion": "1.4",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('windowsScripts')]",
-            "commandToExecute": "[concat('powershell.exe -File elasticsearch-windows-install.ps1 -elasticSearchVersion ', variables('esSettings').version, ' -elasticClusterName ', variables('esSettings').clusterName, ' -discoveryEndpoints ', variables('esSettings').discoveryHosts, variables('cloudAzureParamValue'), variables('marvelParamValue'), variables('marvelExportParamValue'), ' -clientOnlyNode -storageKey ')]"
-          }
-        },
-        "data": {
-          "publisher": "Microsoft.Compute",
-          "type": "CustomScriptExtension",
-          "typeHandlerVersion": "1.4",
-          "autoUpgradeMinorVersion": true,
-          "settings": {
-            "fileUris": "[variables('windowsScripts')]",
-            "commandToExecute": "[concat('powershell.exe -File elasticsearch-windows-install.ps1 -elasticSearchVersion ', variables('esSettings').version, ' -elasticClusterName ', variables('esSettings').clusterName, ' -discoveryEndpoints ', variables('esSettings').discoveryHosts, variables('cloudAzureParamValue'), variables('marvelParamValue'), variables('marvelExportParamValue'), ' -dataOnlyNode -storageKey ')]"
           }
         }
       }
@@ -799,89 +623,8 @@
     },
     "dataTemplateFileNameValue": "[variables('dataTemplateFileName')[concat('afs-', parameters('afs'))]]"
   },
-  "resources": [
-    {
-      "name": "master-nodes",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'shared')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('nestedTemplatesFolderName'), '/', variables('masterTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "storageSettings": {
-            "value": "[variables('dataNodeStorageSettings')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "authSet": {
-            "value": "[variables('authSet')]"
-          },
-          "masterNodesIpPrefix": {
-            "value": "[variables('masterNodesIpPrefix')]"
-          },
-          "vmSize": {
-            "value": "[parameters('vmSizeMasterNodes')]"
-          },
-          "subnet": {
-            "value": "[variables('networkSettings').subnet.master]"
-          },
-          "osSettings": {
-            "value": "[variables('osSettings')]"
-          },
-          "namespace": {
-            "value": "[concat(parameters('esClusterName'), '-master')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "marvel-nodes",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'shared')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('nestedTemplatesFolderName'), '/', variables('marvelTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "storageAccountName": {
-            "value": "[variables('storageAccountNameShared')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "authSet": {
-            "value": "[variables('authSet')]"
-          },
-          "marvelNodesIpPrefix": {
-            "value": "[variables('marvelNodesIpPrefix')]"
-          },
-          "vmSize": {
-            "value": "[parameters('vmSizeMarvelNodes')]"
-          },
-          "subnet": {
-            "value": "[variables('networkSettings').subnet.other]"
-          },
-          "osSettings": {
-            "value": "[variables('osSettings')]"
-          },
-          "namespace": {
-            "value": "[concat(parameters('esClusterName'), '-marvel')]"
-          }
-        }
-      }
-    },
+  "resources": [ 
+    
     {
       "name": "shared",
       "type": "Microsoft.Resources/deployments",
@@ -908,50 +651,7 @@
         }
       }
     },
-    {
-      "name": "client-nodes",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'shared')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('nestedTemplatesFolderName'), '/', variables('clientTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "authSet": {
-            "value": "[variables('authSet')]"
-          },
-          "storageSettings": {
-            "value": "[variables('dataNodeStorageSettings')]"
-          },
-          "subnet": {
-            "value": "[variables('networkSettings').subnet.other]"
-          },
-          "vmSize": {
-            "value": "[parameters('vmSizeClientNodes')]"
-          },
-          "osSettings": {
-            "value": "[variables('osSettings')]"
-          },
-          "vmCount": {
-            "value": "[parameters('vmClientNodeCount')]"
-          },
-          "lbBackendPools": {
-            "value": "[variables('lbBackEndPoolsAdded')]"
-          },
-          "namespace": {
-            "value": "[concat(parameters('esClusterName'), '-client')]"
-          }
-        }
-      }
-    },
+    
     {
       "name": "data-nodes",
       "type": "Microsoft.Resources/deployments",
@@ -995,76 +695,7 @@
           }
         }
       }
-    },
-    {
-      "name": "jumpbox",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'shared')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('nestedTemplatesFolderName'), '/', variables('jumpboxTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "storageAccountName": {
-            "value": "[variables('storageAccountNameShared')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "authSet": {
-            "value": "[variables('authSet')]"
-          },
-          "subnet": {
-            "value": "[variables('networkSettings').subnet.other]"
-          },
-          "osSettings": {
-            "value": "[variables('osSettings')]"
-          },
-          "namespace": {
-            "value": "[concat(parameters('esClusterName'), '-jumpbox')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "kibana",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'shared')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('nestedTemplatesFolderName'), '/', variables('kibanaTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "storageAccountName": {
-            "value": "[variables('storageAccountNameShared')]"
-          },
-          "adminUsername": {
-            "value": "[parameters('adminUsername')]"
-          },
-          "authSet": {
-            "value": "[variables('authSet')]"
-          },
-          "subnet": {
-            "value": "[variables('networkSettings').subnet.other]"
-          },
-          "osSettings": {
-            "value": "[variables('osSettings')]"
-          },
-          "namespace": {
-            "value": "[concat(parameters('esClusterName'), '-kibana')]"
-          }
-        }
-      }
     }
+    
   ]
 }
