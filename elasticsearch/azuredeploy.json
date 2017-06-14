@@ -53,9 +53,9 @@
     },
     "loadBalancerType": {
       "type": "string",
-      "defaultValue": "external",
+      "defaultValue": "internal",
       "allowedValues": [
-        "external"
+        "internal"
       ],
       "metadata": {
         "description": "Setup the load balancer internal or external.  If you are setting up Elasticsearch on an external endpoint you will need to secure your nodes with a product like Elasticsearch Shield"
