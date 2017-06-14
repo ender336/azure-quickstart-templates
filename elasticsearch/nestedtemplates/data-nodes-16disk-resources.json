@@ -74,7 +74,7 @@
     "vmName": "[concat(parameters('namespace'), '-vm5')]"
   },
   "resources": [
-    {
+    /*{
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/availabilitySets",
       "name": "es-data-set",
@@ -83,7 +83,7 @@
         "platformUpdateDomainCount": 20,
         "platformFaultDomainCount": 3
       }
-    },
+    },*/
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
@@ -118,8 +118,8 @@
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '5'))]",
-        "[resourceId('Microsoft.Compute/availabilitySets', 'es-data-set')]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '5'))]"//,
+        //"[resourceId('Microsoft.Compute/availabilitySets', 'es-data-set')]"
       ],
       "properties": {
         "availabilitySet": {
