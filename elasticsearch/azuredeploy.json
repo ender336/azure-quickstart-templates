@@ -258,7 +258,7 @@
     "nestedTemplatesFolderName": "nestedtemplates",
     "scriptsLocation": "[concat(parameters('_artifactsLocation'), '/scripts/')]",
     "sharedScriptsLocation": "https://raw.githubusercontent.com/ender336/azure-quickstart-templates/master/shared_scripts/ubuntu/",
-    "storageAccountPrefix": "[concat(substring(uniqueString(resourceGroup().id, parameters('esClusterName')), 0, 6), substring(parameters('esClusterName'), 0, 3))]",
+    "storageAccountPrefix": "[concat('samart', substring(uniqueString(resourceGroup().id, parameters('esClusterName')), 0, 6), substring(parameters('esClusterName'), 0, 3))]",
     "storageAccountNameAFS": "[concat(variables('storageAccountPrefix'), 'afs')]",
     "storageAccountNameShared": "[concat(variables('storageAccountPrefix'), 'sh')]",
     "masterNodesIpPrefix": "10.0.0.1",
