@@ -71,7 +71,7 @@
     "subnetRef": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('subnet').vnet), '/subnets/', parameters('subnet').name)]",
     "storageAccountName": "[parameters('storageSettings').prefix]",
     "storageAccountNameAFS": "[parameters('storageSettings').afs]",
-    "vmName": "[concat(parameters('namespace'), '-vm4')]"
+    "vmName": "[concat(parameters('namespace'), '-vm5')]"
   },
   "resources": [
     {
@@ -87,7 +87,7 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(parameters('namespace'), '-nic', '4')]",
+      "name": "[concat(parameters('namespace'), '-nic', '5')]",
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "[concat(parameters('namespace'), 'nicLoop')]",
@@ -118,7 +118,7 @@
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '4'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '5'))]",
         "[resourceId('Microsoft.Compute/availabilitySets', 'es-data-set')]"
       ],
       "properties": {
@@ -129,7 +129,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[concat('data-vm', '4')]",
+          "computerName": "[concat('data-vm', '5')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('authSet').password]",
           "linuxConfiguration": "[parameters('osSettings').linuxConfiguration]"
@@ -310,7 +310,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '4'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '5'))]"
             }
           ]
         }
