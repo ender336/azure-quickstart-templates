@@ -87,7 +87,7 @@
     {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(parameters('namespace'), '-nic', '5')]",
+      "name": "[concat(parameters('namespace'), '-nic', '4')]",
       "location": "[resourceGroup().location]",
       "copy": {
         "name": "[concat(parameters('namespace'), 'nicLoop')]",
@@ -118,7 +118,7 @@
         "count": "[parameters('vmCount')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '5'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '4'))]",
         "[resourceId('Microsoft.Compute/availabilitySets', 'es-data-set')]"
       ],
       "properties": {
@@ -129,7 +129,7 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[concat('data-vm', '5')]",
+          "computerName": "[concat('data-vm', '4')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('authSet').password]",
           "linuxConfiguration": "[parameters('osSettings').linuxConfiguration]"
@@ -150,7 +150,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 0,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk1', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk1', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -160,7 +160,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 1,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk2', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk2', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -170,7 +170,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 2,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk3', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk3', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -180,7 +180,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 3,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk4', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk4', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -190,7 +190,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 4,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk5', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk5', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -200,7 +200,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 5,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk6', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk6', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -210,7 +210,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 6,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk7', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk7', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -220,7 +220,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 7,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk8', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk8', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -230,7 +230,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 8,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk9', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk9', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -240,7 +240,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 9,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk10', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk10', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -250,7 +250,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 10,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk11', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk11', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -260,7 +260,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 11,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk12', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk12', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -270,7 +270,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 12,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk13', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk13', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -280,7 +280,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 13,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk14', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk14', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -290,7 +290,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 14,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk15', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk15', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -300,7 +300,7 @@
               "diskSizeGB": "[parameters('dataDiskSize')]",
               "lun": 15,
               "vhd": {
-                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '5', 'dataDisk16', '.vhd')]"
+                "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', concat(variables('storageAccountName'), parameters('storageSettings').mapping[copyindex()])), '2016-01-01').primaryEndpoints.blob, variables('vmStorageAccountContainerName'), '/', parameters('namespace'), 'vm', '4', 'dataDisk16', '.vhd')]"
               },
               "caching": "None",
               "createOption": "Empty"
@@ -310,7 +310,7 @@
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '5'))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('namespace'), '-nic', '4'))]"
             }
           ]
         }
