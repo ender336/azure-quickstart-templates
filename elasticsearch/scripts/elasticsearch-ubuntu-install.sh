@@ -446,6 +446,7 @@ fi
 #and... start the service
 log "Starting Elasticsearch on ${HOSTNAME}"
 update-rc.d elasticsearch defaults 95 10
+sudo /usr/share/elasticsearch/bin/plugin install license
 sudo service elasticsearch start
 log "complete elasticsearch setup and started"
 exit 0
